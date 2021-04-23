@@ -50,6 +50,18 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(newMovie);
     }
 
+    @Override
+    public void updateMovie(MovieDto movieDto) throws MovieDoesntExistException {
+        Objects.requireNonNull(movieDto, "Movie cannot be null");
+        Objects.requireNonNull(movieDto.getTitle(), "Movie title cannot be null");
+        Objects.requireNonNull(movieDto.getGenre(), "Genre cannot be null");
+        Optional<Movie> movieToUpdate = movieRepository.findById(movieDto.getTitle());
+        if(movieToUpdate.isEmpty()) {
+            throw new MovieDoesntExistException(String.format("Movie: %s doesn't exist.", movieDto.getTitle()));
+        }
+        movieRepository.save(new Movie(movieDto.getTitle(), movieDto.getGenre(), movieDto.getScreeningTime()));
+    }
+
     private MovieDto convertEntityToDto(Movie movie) {
         return MovieDto.builder()
                 .title(movie.getTitle())

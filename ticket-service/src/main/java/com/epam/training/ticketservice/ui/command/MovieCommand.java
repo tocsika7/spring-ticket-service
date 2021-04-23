@@ -46,4 +46,21 @@ public class MovieCommand {
         }
         return "Movie created: " + movieDto;
     }
+
+    @ShellMethod(value = "Create new movie", key = "update movie")
+    public String updateMovie(String title, String genre, int screeningTime) {
+        MovieDto movieDto = MovieDto.builder()
+                .title(title)
+                .genre(genre)
+                .screeningTime(screeningTime)
+                .build();
+        try {
+            movieService.updateMovie(movieDto);
+        } catch (MovieDoesntExistException e) {
+            return e.getMessage();
+        }
+        return "Movie updated: " + movieDto;
+    }
+
+
 }

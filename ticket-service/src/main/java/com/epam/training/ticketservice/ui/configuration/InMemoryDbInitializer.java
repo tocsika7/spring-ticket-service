@@ -26,7 +26,7 @@ public class InMemoryDbInitializer {
         Movie lotr = new Movie("The Lord of the Rings: The Return of the King ", "adventure", 201);
         movieRepository.saveAll(List.of(lotr, theGodfather));
 
-        Room room = new Room("VROOM", 50, 10, 5);
+        Room room = new Room("VROOM", 10, 5);
         roomRepository.save(room);
     }
 }

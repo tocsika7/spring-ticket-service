@@ -10,12 +10,11 @@ import lombok.Getter;
 public class RoomDto {
 
     private final String name;
-    private final int chairs;
     private final int rows;
     private final int columns;
 
     @Override
     public String toString() {
-        return String.format("Room %s with %d seats, %d rows and %d columns", name, chairs, rows, columns);
+        return String.format("Room %s with %d seats, %d rows and %d columns", name, rows * columns, rows, columns);
     }
 }

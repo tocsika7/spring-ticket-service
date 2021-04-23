@@ -15,7 +15,6 @@ public class Room {
 
     @Id
     private String name;
-    private int chairs;
     private int rows;
     private int columns;
 }

@@ -5,6 +5,7 @@ import com.epam.training.ticketservice.core.movie.persistence.repository.MovieRe
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
 public class InMemoryDbInitializer {
@@ -18,6 +19,7 @@ public class InMemoryDbInitializer {
     @PostConstruct
     public void init() {
         Movie theGodfather = new Movie("The Godfather", "crime", 175);
-        movieRepository.save(theGodfather);
+        Movie lotr = new Movie("The Lord of the Rings: The Return of the King ", "adventure", 201);
+        movieRepository.saveAll(List.of(lotr, theGodfather));
     }
 }

@@ -17,6 +17,21 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.h2database:h2:1.4.200" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-starter:2.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-core:2.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-validation:2.4.4" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:jakarta.el:3.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:6.1.7.Final" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jline:jline:3.4.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jline:jline-terminal-jna:3.4.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.dev.jna:jna:4.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jline:jline-terminal:3.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-standard:2.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-standard-commands:2.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-shell1-adapter:2.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-jcommander-adapter:2.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.shell:spring-shell-table:2.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.4.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.4.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.4.4" level="project" />

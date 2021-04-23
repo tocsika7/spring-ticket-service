@@ -6,6 +6,7 @@ import com.epam.training.ticketservice.core.movie.exception.MovieExistsException
 import com.epam.training.ticketservice.core.movie.model.MovieDto;
 import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
 import com.epam.training.ticketservice.core.movie.persistence.repository.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,11 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDto> getMovieList() {
-        return movieRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+        List<MovieDto> movies = movieRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+        if(movies.isEmpty()) {
+            System.out.println("There are no movies at the moment");
+        }
+        return movies;
     }
 
     @Override

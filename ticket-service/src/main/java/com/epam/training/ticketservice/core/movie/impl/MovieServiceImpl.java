@@ -1,10 +1,12 @@
 package com.epam.training.ticketservice.core.movie.impl;
 
 import com.epam.training.ticketservice.core.movie.MovieService;
+import com.epam.training.ticketservice.core.movie.exception.MovieDoesntExistException;
 import com.epam.training.ticketservice.core.movie.exception.MovieExistsException;
 import com.epam.training.ticketservice.core.movie.model.MovieDto;
 import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
 import com.epam.training.ticketservice.core.movie.persistence.repository.MovieRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +29,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void deleteMovie(String title) {
+    public void deleteMovie(String title) throws MovieDoesntExistException {
+        try {
         movieRepository.deleteById(title);
+    } catch(EmptyResultDataAccessException e) {
+            throw new MovieDoesntExistException(String.format("Movie: %s doesn't exist.", title));
+        }
     }
 
     @Override

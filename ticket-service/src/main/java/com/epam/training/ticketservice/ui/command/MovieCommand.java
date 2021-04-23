@@ -1,6 +1,7 @@
 package com.epam.training.ticketservice.ui.command;
 
 import com.epam.training.ticketservice.core.movie.MovieService;
+import com.epam.training.ticketservice.core.movie.exception.MovieDoesntExistException;
 import com.epam.training.ticketservice.core.movie.exception.MovieExistsException;
 import com.epam.training.ticketservice.core.movie.model.MovieDto;
 import org.springframework.shell.standard.ShellComponent;
@@ -23,7 +24,13 @@ public class MovieCommand {
     }
 
     @ShellMethod(value = "Delete a movie by title", key = "delete movie")
-    public void deleteMovie(String title) {movieService.deleteMovie(title);}
+    public void deleteMovie(String title) {
+        try {
+            movieService.deleteMovie(title);
+        } catch (MovieDoesntExistException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @ShellMethod(value = "Create new movie", key = "create movie")
     public String createMovie(String title, String genre, int screeningTime) {

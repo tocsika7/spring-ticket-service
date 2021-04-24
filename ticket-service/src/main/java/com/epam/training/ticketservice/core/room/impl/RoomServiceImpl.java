@@ -6,6 +6,7 @@ import com.epam.training.ticketservice.core.room.exception.RoomDoesntExistExcept
 import com.epam.training.ticketservice.core.room.model.RoomDto;
 import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import com.epam.training.ticketservice.core.room.persistence.repository.RoomRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +66,15 @@ public class RoomServiceImpl implements RoomService {
                 roomDto.getRows(),
                 roomDto.getColumns()
         ));
+    }
+
+    @Override
+    public void deleteRoom(String name) throws RoomDoesntExistException {
+        Objects.requireNonNull(name, "Room name cannot be null");
+        try {
+            roomRepository.deleteById(name);
+        } catch (EmptyResultDataAccessException e) {
+            throw new RoomDoesntExistException(String.format("Room: %s doesn't exist", name));
+        }
     }
 }

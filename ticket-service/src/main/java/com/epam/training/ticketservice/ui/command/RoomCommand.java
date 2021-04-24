@@ -51,4 +51,14 @@ public class RoomCommand {
             System.out.println(e.getMessage());
         }
     }
+
+    @ShellMethod(value = "Delete room by name", key = "delete room")
+    public void deleteRoom(String name) {
+        try {
+            roomService.deleteRoom(name);
+            System.out.printf("Room %s deleted%n", name);
+        } catch (RoomDoesntExistException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

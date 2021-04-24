@@ -10,12 +10,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "movie")
 public class Movie {
 
     @Id
-    @Column(unique = true)
+    @Column(unique = true, name = "movie_title")
     private String title;
+
+    @Column(name = "genre")
     private String genre;
+
+    @Column(name = "screening_time")
     private int screeningTime;
 
 

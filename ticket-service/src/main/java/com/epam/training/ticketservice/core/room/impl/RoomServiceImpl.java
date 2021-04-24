@@ -2,6 +2,7 @@ package com.epam.training.ticketservice.core.room.impl;
 
 import com.epam.training.ticketservice.core.room.RoomService;
 import com.epam.training.ticketservice.core.room.exception.RoomAlreadyExistsException;
+import com.epam.training.ticketservice.core.room.exception.RoomDoesntExistException;
 import com.epam.training.ticketservice.core.room.model.RoomDto;
 import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import com.epam.training.ticketservice.core.room.persistence.repository.RoomRepository;
@@ -43,6 +44,21 @@ public class RoomServiceImpl implements RoomService {
         Optional<Room> roomToCreate  = roomRepository.findById(roomDto.getName());
         if(roomToCreate.isPresent()) {
             throw new RoomAlreadyExistsException(String.format("Room: %s already exists", roomDto.getName()));
+        }
+        roomRepository.save(new Room(
+                roomDto.getName(),
+                roomDto.getRows(),
+                roomDto.getColumns()
+        ));
+    }
+
+    @Override
+    public void updateRoom(RoomDto roomDto) throws RoomDoesntExistException {
+        Objects.requireNonNull(roomDto, "Room cannot be null");
+        Objects.requireNonNull(roomDto.getName(), "Room name cannot be null");
+        Optional<Room> roomToUpdate  = roomRepository.findById(roomDto.getName());
+        if(roomToUpdate.isEmpty()) {
+            throw new RoomDoesntExistException(String.format("Room: %s doesn't exist", roomDto.getName()));
         }
         roomRepository.save(new Room(
                 roomDto.getName(),

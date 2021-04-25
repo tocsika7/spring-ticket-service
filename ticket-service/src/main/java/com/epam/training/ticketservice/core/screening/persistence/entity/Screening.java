@@ -5,10 +5,11 @@ import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Screening {
 

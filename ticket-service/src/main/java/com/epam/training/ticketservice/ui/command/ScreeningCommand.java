@@ -4,8 +4,11 @@ import com.epam.training.ticketservice.core.movie.exception.MovieDoesntExistExce
 import com.epam.training.ticketservice.core.room.exception.RoomDoesntExistException;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
+import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+
+import java.util.List;
 
 @ShellComponent
 public class ScreeningCommand {
@@ -29,5 +32,10 @@ public class ScreeningCommand {
         } catch (RoomDoesntExistException | MovieDoesntExistException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @ShellMethod(value = "Listing all available screenings", key = "list screenings")
+    public List<ScreeningListDto> listScreenings() {
+        return screeningService.listScreenings();
     }
 }

@@ -8,12 +8,15 @@ import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import com.epam.training.ticketservice.core.room.persistence.repository.RoomRepository;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
+import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
 import com.epam.training.ticketservice.core.screening.persistence.entity.Screening;
 import com.epam.training.ticketservice.core.screening.persistence.repository.ScreeningRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
@@ -28,6 +31,21 @@ public class ScreeningServiceImpl implements ScreeningService {
         this.roomRepository = roomRepository;
     }
 
+
+    @Override
+    public List<ScreeningListDto> listScreenings() {
+        List<ScreeningListDto> screeningListDto = screeningRepository.findAll().stream().map(screening ->
+                ScreeningListDto.builder()
+                .room(screening.getRoom().getName())
+                .movie(screening.getMovie())
+                .startDate(screening.getStartDate())
+                .build()
+                ).collect(Collectors.toList());
+        if(screeningListDto.isEmpty()) {
+            System.out.println("There are no screenings");
+        }
+        return screeningListDto;
+    }
 
     @Override
     public void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException {

@@ -9,7 +9,7 @@ import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 
 @ShellComponent
@@ -22,7 +22,7 @@ public class ScreeningCommand {
     }
 
     @ShellMethod(value = "Create a new screening", key = "create screening")
-    public void createScreening(String movieTitle, String roomName, Date startDate) {
+    public void createScreening(String movieTitle, String roomName, String startDate) {
         ScreeningDto screeningDto = ScreeningDto.builder()
                 .movieTitle(movieTitle)
                 .roomName(roomName)
@@ -31,7 +31,7 @@ public class ScreeningCommand {
         try {
             screeningService.createScreening(screeningDto);
             System.out.println("Screening created: " + screeningDto);
-        } catch (RoomDoesntExistException | MovieDoesntExistException e) {
+        } catch (RoomDoesntExistException | MovieDoesntExistException | ParseException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -42,7 +42,7 @@ public class ScreeningCommand {
     }
 
     @ShellMethod(value = "Delete screening by all attributes", key = "delete screening")
-    public void deleteScreening(String movieTitle, String roomName, Date startDate) {
+    public void deleteScreening(String movieTitle, String roomName, String startDate) {
         ScreeningDto screeningDto = ScreeningDto.builder()
                 .movieTitle(movieTitle)
                 .startDate(startDate)
@@ -51,7 +51,7 @@ public class ScreeningCommand {
         try {
             screeningService.deleteScreening(screeningDto);
             System.out.println("Screening deleted: " + screeningDto);
-        } catch (RoomDoesntExistException | MovieDoesntExistException | ScreeningDoesntExistException e) {
+        } catch (RoomDoesntExistException | MovieDoesntExistException | ScreeningDoesntExistException | ParseException e) {
             System.out.println(e.getMessage());
         }
     }

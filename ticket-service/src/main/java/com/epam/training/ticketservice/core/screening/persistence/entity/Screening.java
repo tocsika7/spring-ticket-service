@@ -5,6 +5,7 @@ import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Builder
@@ -26,6 +27,6 @@ public class Screening {
     private Movie movie;
 
     @Column(unique = true, name = "start_date")
-    private String startDate;
+    private Date startDate;
 
 }

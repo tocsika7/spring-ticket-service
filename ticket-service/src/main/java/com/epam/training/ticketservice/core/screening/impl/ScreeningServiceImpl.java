@@ -1,5 +1,6 @@
 package com.epam.training.ticketservice.core.screening.impl;
 
+import com.epam.training.ticketservice.core.date.DateConverterService;
 import com.epam.training.ticketservice.core.movie.exception.MovieDoesntExistException;
 import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
 import com.epam.training.ticketservice.core.movie.persistence.repository.MovieRepository;
@@ -14,6 +15,7 @@ import com.epam.training.ticketservice.core.screening.persistence.entity.Screeni
 import com.epam.training.ticketservice.core.screening.persistence.repository.ScreeningRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,11 +27,13 @@ public class ScreeningServiceImpl implements ScreeningService {
     private final ScreeningRepository screeningRepository;
     private final MovieRepository movieRepository;
     private final RoomRepository roomRepository;
+    private final DateConverterService dateConverterService;
 
-    public ScreeningServiceImpl(ScreeningRepository screeningRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
+    public ScreeningServiceImpl(ScreeningRepository screeningRepository, MovieRepository movieRepository, RoomRepository roomRepository, DateConverterService dateConverterService) {
         this.screeningRepository = screeningRepository;
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
+        this.dateConverterService = dateConverterService;
     }
 
 
@@ -39,7 +43,7 @@ public class ScreeningServiceImpl implements ScreeningService {
                 ScreeningListDto.builder()
                 .room(screening.getRoom().getName())
                 .movie(screening.getMovie())
-                .startDate(screening.getStartDate())
+                .startDate(dateConverterService.convertDateToString(screening.getStartDate()))
                 .build()
                 ).collect(Collectors.toList());
         if(screeningListDto.isEmpty()) {
@@ -49,7 +53,7 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException {
+    public void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ParseException {
         Objects.requireNonNull(screeningDto, "Screening cannot be null");
         Objects.requireNonNull(screeningDto.getMovieTitle(), "Movie title cannot be null");
         Objects.requireNonNull(screeningDto.getRoomName(), "Room name cannot be null");
@@ -57,13 +61,13 @@ public class ScreeningServiceImpl implements ScreeningService {
         Screening screening = Screening.builder()
                 .movie(queryMovie(screeningDto.getMovieTitle()))
                 .room(queryRoom(screeningDto.getRoomName()))
-                .startDate(screeningDto.getStartDate())
+                .startDate(dateConverterService.convertStringToDate(screeningDto.getStartDate()))
                 .build();
         screeningRepository.save(screening);
     }
 
     @Override
-    public void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ScreeningDoesntExistException {
+    public void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ScreeningDoesntExistException, ParseException {
         Objects.requireNonNull(screeningDto, "Screening cannot be null");
         Objects.requireNonNull(screeningDto.getMovieTitle(), "Movie title cannot be null");
         Objects.requireNonNull(screeningDto.getRoomName(), "Room name cannot be null");
@@ -71,7 +75,7 @@ public class ScreeningServiceImpl implements ScreeningService {
         Screening screening = Screening.builder()
                 .movie(queryMovie(screeningDto.getMovieTitle()))
                 .room(queryRoom(screeningDto.getRoomName()))
-                .startDate(screeningDto.getStartDate())
+                .startDate(dateConverterService.convertStringToDate(screeningDto.getStartDate()))
                 .build();
         Optional<Screening> screeningToDelete = screeningRepository
                 .findFirstByMovieAndRoomAndStartDate(screening.getMovie(), screening.getRoom(), screening.getStartDate());

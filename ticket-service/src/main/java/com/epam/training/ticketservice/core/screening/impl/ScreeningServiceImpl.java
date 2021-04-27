@@ -7,6 +7,7 @@ import com.epam.training.ticketservice.core.room.exception.RoomDoesntExistExcept
 import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import com.epam.training.ticketservice.core.room.persistence.repository.RoomRepository;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
+import com.epam.training.ticketservice.core.screening.exception.ScreeningDoesntExistException;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
 import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
 import com.epam.training.ticketservice.core.screening.persistence.entity.Screening;
@@ -59,6 +60,25 @@ public class ScreeningServiceImpl implements ScreeningService {
                 .startDate(screeningDto.getStartDate())
                 .build();
         screeningRepository.save(screening);
+    }
+
+    @Override
+    public void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ScreeningDoesntExistException {
+        Objects.requireNonNull(screeningDto, "Screening cannot be null");
+        Objects.requireNonNull(screeningDto.getMovieTitle(), "Movie title cannot be null");
+        Objects.requireNonNull(screeningDto.getRoomName(), "Room name cannot be null");
+        Objects.requireNonNull(screeningDto.getStartDate(), "Start date cannot be null");
+        Screening screening = Screening.builder()
+                .movie(queryMovie(screeningDto.getMovieTitle()))
+                .room(queryRoom(screeningDto.getRoomName()))
+                .startDate(screeningDto.getStartDate())
+                .build();
+        Optional<Screening> screeningToDelete = screeningRepository
+                .findFirstByMovieAndRoomAndStartDate(screening.getMovie(), screening.getRoom(), screening.getStartDate());
+        if(screeningToDelete.isEmpty()) {
+            throw new ScreeningDoesntExistException(screeningDto + " doesn't exist");
+        }
+        screeningRepository.delete(screeningToDelete.get());
     }
 
     protected Movie queryMovie(String title) throws MovieDoesntExistException {

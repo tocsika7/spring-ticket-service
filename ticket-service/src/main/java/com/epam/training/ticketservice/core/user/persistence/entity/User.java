@@ -1,10 +1,12 @@
 package com.epam.training.ticketservice.core.user.persistence.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 public class User {
 
@@ -19,5 +21,11 @@ public class User {
 
     public static enum Role {
         ADMIN, USER
+    }
+
+    public User(String username, String password, User.Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 }

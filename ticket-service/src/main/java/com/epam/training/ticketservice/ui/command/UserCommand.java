@@ -10,11 +10,9 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class UserCommand {
 
-    private final UserService userService;
     private final AuthenticationService authenticationService;
 
-    public UserCommand(UserService userService, AuthenticationService authenticationService) {
-        this.userService = userService;
+    public UserCommand(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 

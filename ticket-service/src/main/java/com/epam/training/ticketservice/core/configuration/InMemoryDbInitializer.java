@@ -34,6 +34,7 @@ public class InMemoryDbInitializer {
         roomRepository.save(room);
 
         User admin = new User("admin", "admin", User.Role.ADMIN);
-        userRepository.save(admin);
+        User user = new User("user", "pw", User.Role.USER);
+        userRepository.saveAll(List.of(user, admin));
     }
 }

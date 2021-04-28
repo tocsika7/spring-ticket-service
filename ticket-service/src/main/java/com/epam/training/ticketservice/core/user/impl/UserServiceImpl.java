@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
         Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
         if (user.isEmpty()) {
-            throw new UserNotFoundException("Login failed due to invalid credentials");
+            throw new UserNotFoundException("Login failed due to incorrect credentials");
         }
         return convertEntityToDto(user.get());
     }

@@ -26,7 +26,7 @@ public class UserCommand {
         }
     }
 
-    @ShellMethod(value = "Describe currently logged in user", key = "describe user")
+    @ShellMethod(value = "Describe currently logged in user", key = "describe account")
     public String describeUser() {
         try {
             UserDto userDto = authenticationService.getLoggedUser();

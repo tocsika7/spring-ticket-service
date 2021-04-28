@@ -16,6 +16,6 @@ public class MovieDto {
 
     @Override
     public String toString() {
-        return String.format("%s (%s, %d)",title,genre,screeningTime);
+        return String.format("%s (%s, %d minutes)",title,genre,screeningTime);
     }
 }

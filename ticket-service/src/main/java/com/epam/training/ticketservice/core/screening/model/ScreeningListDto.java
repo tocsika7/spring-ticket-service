@@ -16,7 +16,7 @@ public class ScreeningListDto {
 
     @Override
     public String toString() {
-        return String.format("%s (%s, %d), screened in room %s, at %s",
+        return String.format("%s (%s, %d minutes), screened in room %s, at %s",
                 movie.getTitle(),
                 movie.getGenre(),
                 movie.getScreeningTime(),

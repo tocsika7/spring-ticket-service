@@ -38,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public UserDto getLoggedUser() throws UserNotFoundException {
         if (loggedInUser == null) {
-            throw new UserNotFoundException("You are not logged in");
+            throw new UserNotFoundException("You are not signed in");
         } else {
             return loggedInUser;
         }
@@ -47,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public String logout() {
         if (loggedInUser == null) {
-            return "You are not logged in";
+            return "You are not signed in";
         } else {
             loggedInUser = null;
             return "Logout successful";

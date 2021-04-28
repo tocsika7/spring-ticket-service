@@ -26,8 +26,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDto> getMovieList() {
-        List<MovieDto> movies = movieRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
-        if(movies.isEmpty()) {
+        List<MovieDto> movies = movieRepository.findAll()
+                .stream().map(this::convertEntityToDto).collect(Collectors.toList());
+        if (movies.isEmpty()) {
             System.out.println("There are no movies at the moment");
         }
         return movies;
@@ -36,8 +37,8 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteMovie(String title) throws MovieDoesntExistException {
         try {
-        movieRepository.deleteById(title);
-    } catch(EmptyResultDataAccessException e) {
+            movieRepository.deleteById(title);
+        } catch (EmptyResultDataAccessException e) {
             throw new MovieDoesntExistException(String.format("Movie: %s doesn't exist.", title));
         }
     }
@@ -48,7 +49,7 @@ public class MovieServiceImpl implements MovieService {
         Objects.requireNonNull(movie.getTitle(), "Movie title cannot be null");
         Objects.requireNonNull(movie.getGenre(), "Genre cannot be null");
         Optional<Movie> movieToCreate = movieRepository.findById(movie.getTitle());
-        if(movieToCreate.isPresent()) {
+        if (movieToCreate.isPresent()) {
             throw new MovieExistsException("The movie " + movie.getTitle() + " already exists");
         }
         Movie newMovie = new Movie(movie.getTitle(), movie.getGenre(), movie.getScreeningTime());
@@ -61,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
         Objects.requireNonNull(movieDto.getTitle(), "Movie title cannot be null");
         Objects.requireNonNull(movieDto.getGenre(), "Genre cannot be null");
         Optional<Movie> movieToUpdate = movieRepository.findById(movieDto.getTitle());
-        if(movieToUpdate.isEmpty()) {
+        if (movieToUpdate.isEmpty()) {
             throw new MovieDoesntExistException(String.format("Movie: %s doesn't exist.", movieDto.getTitle()));
         }
         movieRepository.save(new Movie(movieDto.getTitle(), movieDto.getGenre(), movieDto.getScreeningTime()));

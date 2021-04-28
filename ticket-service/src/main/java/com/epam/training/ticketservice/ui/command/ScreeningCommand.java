@@ -61,7 +61,8 @@ public class ScreeningCommand {
         try {
             screeningService.deleteScreening(screeningDto);
             System.out.println("Screening deleted: " + screeningDto);
-        } catch (RoomDoesntExistException | MovieDoesntExistException | ScreeningDoesntExistException | ParseException e) {
+        } catch (RoomDoesntExistException | MovieDoesntExistException
+                | ScreeningDoesntExistException | ParseException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -69,7 +70,7 @@ public class ScreeningCommand {
     private Availability isAvailable() {
         try {
             UserDto userDto = authenticationService.getLoggedUser();
-            if(userDto.getRole() == User.Role.ADMIN) {
+            if (userDto.getRole() == User.Role.ADMIN) {
                 return Availability.available();
             } else {
                 return Availability.unavailable("You are not an admin user");

@@ -9,7 +9,10 @@ import java.util.List;
 public interface RoomService {
 
     List<RoomDto> getRoomList();
+
     void createRoom(RoomDto roomDto) throws RoomAlreadyExistsException;
+
     void updateRoom(RoomDto roomDto) throws RoomDoesntExistException;
+
     void deleteRoom(String name) throws RoomDoesntExistException;
 }

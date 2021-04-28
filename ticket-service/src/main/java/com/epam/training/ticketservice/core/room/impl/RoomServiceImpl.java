@@ -32,7 +32,7 @@ public class RoomServiceImpl implements RoomService {
                     .columns(room.getColumns())
                 .build()
         ).collect(Collectors.toList());
-        if(rooms.isEmpty()) {
+        if (rooms.isEmpty()) {
             System.out.println("There are no rooms at the moment");
         }
         return rooms;
@@ -43,7 +43,7 @@ public class RoomServiceImpl implements RoomService {
         Objects.requireNonNull(roomDto, "Room cannot be null");
         Objects.requireNonNull(roomDto.getName(), "Room name cannot be null");
         Optional<Room> roomToCreate  = roomRepository.findById(roomDto.getName());
-        if(roomToCreate.isPresent()) {
+        if (roomToCreate.isPresent()) {
             throw new RoomAlreadyExistsException(String.format("Room: %s already exists", roomDto.getName()));
         }
         roomRepository.save(new Room(
@@ -58,7 +58,7 @@ public class RoomServiceImpl implements RoomService {
         Objects.requireNonNull(roomDto, "Room cannot be null");
         Objects.requireNonNull(roomDto.getName(), "Room name cannot be null");
         Optional<Room> roomToUpdate  = roomRepository.findById(roomDto.getName());
-        if(roomToUpdate.isEmpty()) {
+        if (roomToUpdate.isEmpty()) {
             throw new RoomDoesntExistException(String.format("Room: %s doesn't exist", roomDto.getName()));
         }
         roomRepository.save(new Room(

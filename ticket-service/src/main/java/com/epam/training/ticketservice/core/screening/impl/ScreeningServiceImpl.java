@@ -14,7 +14,6 @@ import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
 import com.epam.training.ticketservice.core.screening.persistence.entity.Screening;
 import com.epam.training.ticketservice.core.screening.persistence.repository.ScreeningRepository;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,8 @@ public class ScreeningServiceImpl implements ScreeningService {
     private final RoomRepository roomRepository;
     private final DateConverterService dateConverterService;
 
-    public ScreeningServiceImpl(ScreeningRepository screeningRepository, MovieRepository movieRepository, RoomRepository roomRepository, DateConverterService dateConverterService) {
+    public ScreeningServiceImpl(ScreeningRepository screeningRepository, MovieRepository movieRepository,
+                                RoomRepository roomRepository, DateConverterService dateConverterService) {
         this.screeningRepository = screeningRepository;
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
@@ -46,14 +46,15 @@ public class ScreeningServiceImpl implements ScreeningService {
                 .startDate(dateConverterService.convertDateToString(screening.getStartDate()))
                 .build()
                 ).collect(Collectors.toList());
-        if(screeningListDto.isEmpty()) {
+        if (screeningListDto.isEmpty()) {
             System.out.println("There are no screenings");
         }
         return screeningListDto;
     }
 
     @Override
-    public void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ParseException {
+    public void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException,
+            ParseException {
         Objects.requireNonNull(screeningDto, "Screening cannot be null");
         Objects.requireNonNull(screeningDto.getMovieTitle(), "Movie title cannot be null");
         Objects.requireNonNull(screeningDto.getRoomName(), "Room name cannot be null");
@@ -67,7 +68,8 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ScreeningDoesntExistException, ParseException {
+    public void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException,
+            ScreeningDoesntExistException, ParseException {
         Objects.requireNonNull(screeningDto, "Screening cannot be null");
         Objects.requireNonNull(screeningDto.getMovieTitle(), "Movie title cannot be null");
         Objects.requireNonNull(screeningDto.getRoomName(), "Room name cannot be null");
@@ -78,8 +80,9 @@ public class ScreeningServiceImpl implements ScreeningService {
                 .startDate(dateConverterService.convertStringToDate(screeningDto.getStartDate()))
                 .build();
         Optional<Screening> screeningToDelete = screeningRepository
-                .findFirstByMovieAndRoomAndStartDate(screening.getMovie(), screening.getRoom(), screening.getStartDate());
-        if(screeningToDelete.isEmpty()) {
+                .findFirstByMovieAndRoomAndStartDate(screening.getMovie(), screening.getRoom(),
+                        screening.getStartDate());
+        if (screeningToDelete.isEmpty()) {
             throw new ScreeningDoesntExistException(screeningDto + " doesn't exist");
         }
         screeningRepository.delete(screeningToDelete.get());
@@ -87,7 +90,7 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     protected Movie queryMovie(String title) throws MovieDoesntExistException {
         Optional<Movie> movie = movieRepository.findById(title);
-        if(movie.isEmpty()) {
+        if (movie.isEmpty()) {
             throw new MovieDoesntExistException("Movie: " + title + " doesn't exist.");
         }
         return movie.get();
@@ -95,7 +98,7 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     protected Room queryRoom(String name) throws RoomDoesntExistException {
         Optional<Room> room = roomRepository.findById(name);
-        if(room.isEmpty()) {
+        if (room.isEmpty()) {
             throw new RoomDoesntExistException("Room: " + name + " doesn't exist");
         }
         return room.get();

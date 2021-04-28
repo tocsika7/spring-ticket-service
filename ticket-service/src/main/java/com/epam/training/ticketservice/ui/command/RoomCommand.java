@@ -27,7 +27,9 @@ public class RoomCommand {
     }
 
     @ShellMethod(value = "List All Available Rooms", key = "list rooms")
-    public List<RoomDto> listRooms() {return roomService.getRoomList();}
+    public List<RoomDto> listRooms() {
+        return roomService.getRoomList();
+    }
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(value = "Create new Room", key = "create room")
@@ -75,7 +77,7 @@ public class RoomCommand {
     private Availability isAvailable() {
         try {
             UserDto userDto = authenticationService.getLoggedUser();
-            if(userDto.getRole() == User.Role.ADMIN) {
+            if (userDto.getRole() == User.Role.ADMIN) {
                 return Availability.available();
             } else {
                 return Availability.unavailable("You are not an admin user");

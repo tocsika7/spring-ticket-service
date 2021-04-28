@@ -7,7 +7,6 @@ import com.epam.training.ticketservice.core.user.persistence.entity.User;
 import com.epam.training.ticketservice.core.user.persistence.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,13 +21,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
         Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
-        if(user.isEmpty()) {
+        if (user.isEmpty()) {
             throw new UserNotFoundException("Login failed due to invalid credentials");
         }
         return convertEntityToDto(user.get());
     }
 
     protected UserDto convertEntityToDto(User user) {
-         return new UserDto(user.getUsername(), user.getRole());
+        return new UserDto(user.getUsername(), user.getRole());
     }
 }

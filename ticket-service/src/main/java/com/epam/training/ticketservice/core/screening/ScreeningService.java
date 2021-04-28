@@ -12,6 +12,10 @@ import java.util.List;
 public interface ScreeningService {
 
     List<ScreeningListDto> listScreenings();
-    void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ParseException;
-    void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException, ScreeningDoesntExistException, ParseException;
+
+    void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException,
+            ParseException;
+
+    void deleteScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException,
+            ScreeningDoesntExistException, ParseException;
 }

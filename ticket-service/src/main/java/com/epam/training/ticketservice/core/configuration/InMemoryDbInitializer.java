@@ -18,7 +18,8 @@ public class InMemoryDbInitializer {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
 
-    public InMemoryDbInitializer(MovieRepository movieRepository, RoomRepository roomRepository, UserRepository userRepository){
+    public InMemoryDbInitializer(MovieRepository movieRepository, RoomRepository roomRepository,
+                                 UserRepository userRepository) {
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;

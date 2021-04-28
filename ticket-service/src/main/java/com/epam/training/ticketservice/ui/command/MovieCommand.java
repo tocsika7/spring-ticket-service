@@ -76,7 +76,7 @@ public class MovieCommand {
     private Availability isAvailable() {
         try {
             UserDto userDto = authenticationService.getLoggedUser();
-            if(userDto.getRole() == User.Role.ADMIN) {
+            if (userDto.getRole() == User.Role.ADMIN) {
                 return Availability.available();
             } else {
                 return Availability.unavailable("You are not an admin user");

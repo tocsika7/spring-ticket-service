@@ -15,7 +15,7 @@ public class UserDto {
 
     @Override
     public String toString() {
-        if(role == User.Role.ADMIN) {
+        if (role == User.Role.ADMIN) {
             return "privileged account " + username;
         } else  {
             return "account " + username;

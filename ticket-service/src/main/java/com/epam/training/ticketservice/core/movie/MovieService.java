@@ -10,7 +10,10 @@ import java.util.List;
 public interface MovieService {
 
     List<MovieDto> getMovieList();
+
     void deleteMovie(String title) throws MovieDoesntExistException;
+
     void createMovie(MovieDto movie) throws MovieExistsException;
+
     void updateMovie(MovieDto movieDto) throws MovieDoesntExistException;
 }

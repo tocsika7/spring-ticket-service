@@ -21,8 +21,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByUsernameAndPassword(String username, String password) throws UserNotFoundException {
-        Objects.requireNonNull(username, "Username cannot be null");
-        Objects.requireNonNull(password, "Password cannot be null");
         Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
         if(user.isEmpty()) {
             throw new UserNotFoundException("Login failed due to invalid credentials");
@@ -31,6 +29,6 @@ public class UserServiceImpl implements UserService {
     }
 
     protected UserDto convertEntityToDto(User user) {
-        return new UserDto(user.getUsername(), user.getRole());
+         return new UserDto(user.getUsername(), user.getRole());
     }
 }

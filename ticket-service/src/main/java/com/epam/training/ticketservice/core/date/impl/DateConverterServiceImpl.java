@@ -12,12 +12,12 @@ import java.util.Date;
 public class DateConverterServiceImpl implements DateConverterService {
     @Override
     public Date convertStringToDate(String input) throws ParseException {
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(input);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(input);
     }
 
     @Override
     public String convertDateToString(Date date) {
-        DateFormat dateDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        DateFormat dateDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return dateDateFormat.format(date);
     }
 }

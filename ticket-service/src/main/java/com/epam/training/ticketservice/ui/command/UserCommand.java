@@ -4,6 +4,7 @@ import com.epam.training.ticketservice.core.user.AuthenticationService;
 import com.epam.training.ticketservice.core.user.UserService;
 import com.epam.training.ticketservice.core.user.exception.UserNotFoundException;
 import com.epam.training.ticketservice.core.user.model.UserDto;
+import com.epam.training.ticketservice.core.user.persistence.entity.User;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -20,7 +21,8 @@ public class UserCommand {
     public String loginUser(String username, String password) {
         try {
             authenticationService.login(username, password);
-            return "Login successful";
+            UserDto user = authenticationService.getLoggedUser();
+            return "Signed in with " + user;
         } catch (UserNotFoundException e) {
             return e.getMessage();
         }
@@ -36,7 +38,7 @@ public class UserCommand {
         }
     }
 
-    @ShellMethod(value = "Log out from current account", key = "logout")
+    @ShellMethod(value = "Log out from current account", key = "sign out")
     public String logout() {
         return authenticationService.logout();
     }

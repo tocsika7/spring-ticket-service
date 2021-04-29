@@ -124,7 +124,8 @@ public class ScreeningServiceImpl implements ScreeningService {
                 }
                 if ((screeningToAddStart.before(DateUtils.addMinutes(screeningEnd, 11)))
                         && (screeningToAddEnd.after(screeningStart))) {
-                    throw new OverlappingScreeningException("This would start in the break period after another screening in this room");
+                    throw new OverlappingScreeningException(
+                            "This would start in the break period after another screening in this room");
                 }
             }
         }

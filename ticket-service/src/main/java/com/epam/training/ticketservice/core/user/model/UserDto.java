@@ -16,9 +16,9 @@ public class UserDto {
     @Override
     public String toString() {
         if (role == User.Role.ADMIN) {
-            return "privileged account " + username;
+            return String.format("privileged account '%s'", username);
         } else  {
-            return "account " + username;
+            return String.format("account '%s'", username);
         }
     }
 }

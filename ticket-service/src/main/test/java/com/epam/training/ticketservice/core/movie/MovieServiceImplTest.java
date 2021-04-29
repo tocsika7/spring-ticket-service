@@ -138,7 +138,7 @@ public class MovieServiceImplTest {
         // When
         Assertions.assertThrows(MovieExistsException.class, () -> underTest.createMovie(shrekDto));
 
-        //Then
+        // Then
         Mockito.verify(movieRepository, times(0)).save(any());
     }
 

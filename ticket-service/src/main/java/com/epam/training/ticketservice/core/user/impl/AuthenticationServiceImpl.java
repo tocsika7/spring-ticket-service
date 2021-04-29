@@ -22,7 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.userService = userService;
     }
 
-    AuthenticationServiceImpl(UserService userService, UserDto loggedInUser) {
+    public AuthenticationServiceImpl(UserService userService, UserDto loggedInUser) {
         this.userService = userService;
         this.loggedInUser = loggedInUser;
     }

@@ -8,13 +8,16 @@ import com.epam.training.ticketservice.core.room.exception.RoomDoesntExistExcept
 import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import com.epam.training.ticketservice.core.room.persistence.repository.RoomRepository;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
+import com.epam.training.ticketservice.core.screening.exception.OverlappingScreeningException;
 import com.epam.training.ticketservice.core.screening.exception.ScreeningDoesntExistException;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
 import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
 import com.epam.training.ticketservice.core.screening.persistence.entity.Screening;
 import com.epam.training.ticketservice.core.screening.persistence.repository.ScreeningRepository;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,7 +57,7 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     @Override
     public void createScreening(ScreeningDto screeningDto) throws MovieDoesntExistException, RoomDoesntExistException,
-            ParseException {
+            ParseException, OverlappingScreeningException {
         Objects.requireNonNull(screeningDto, "Screening cannot be null");
         Objects.requireNonNull(screeningDto.getMovieTitle(), "Movie title cannot be null");
         Objects.requireNonNull(screeningDto.getRoomName(), "Room name cannot be null");
@@ -64,6 +67,7 @@ public class ScreeningServiceImpl implements ScreeningService {
                 .room(queryRoom(screeningDto.getRoomName()))
                 .startDate(dateConverterService.convertStringToDate(screeningDto.getStartDate()))
                 .build();
+        checkOverlappingScreening(screening);
         screeningRepository.save(screening);
     }
 
@@ -103,4 +107,27 @@ public class ScreeningServiceImpl implements ScreeningService {
         }
         return room.get();
     }
+
+    protected void checkOverlappingScreening(Screening screeningToAdd) throws OverlappingScreeningException {
+        Date screeningToAddStart = screeningToAdd.getStartDate();
+        Date screeningToAddEnd = DateUtils.addMinutes(screeningToAddStart,
+                screeningToAdd.getMovie().getScreeningTime());
+        List<Screening> screenings = screeningRepository.findAllByRoom(screeningToAdd.getRoom());
+        if (!screenings.isEmpty()) {
+            for (Screening screening : screenings) {
+                Date screeningStart = screening.getStartDate();
+                Date screeningEnd = DateUtils.addMinutes(screeningStart,
+                        screening.getMovie().getScreeningTime());
+                if ((screeningToAddStart.before(screeningEnd))
+                        && (screeningToAddEnd.after(screeningStart))) {
+                    throw new OverlappingScreeningException("There is an overlapping screening");
+                }
+                if ((screeningToAddStart.before(DateUtils.addMinutes(screeningEnd, 11)))
+                        && (screeningToAddEnd.after(screeningStart))) {
+                    throw new OverlappingScreeningException("This would start in the break period after another screening in this room");
+                }
+            }
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.epam.training.ticketservice.ui.command;
 import com.epam.training.ticketservice.core.movie.exception.MovieDoesntExistException;
 import com.epam.training.ticketservice.core.room.exception.RoomDoesntExistException;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
+import com.epam.training.ticketservice.core.screening.exception.OverlappingScreeningException;
 import com.epam.training.ticketservice.core.screening.exception.ScreeningDoesntExistException;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
 import com.epam.training.ticketservice.core.screening.model.ScreeningListDto;
@@ -40,7 +41,8 @@ public class ScreeningCommand {
         try {
             screeningService.createScreening(screeningDto);
             System.out.println("Screening created: " + screeningDto);
-        } catch (RoomDoesntExistException | MovieDoesntExistException | ParseException e) {
+        } catch (RoomDoesntExistException | MovieDoesntExistException
+                | ParseException | OverlappingScreeningException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ import javax.persistence.EnumType;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@Generated
 @Entity
 public class User {
 

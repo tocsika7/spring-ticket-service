@@ -3,11 +3,13 @@ package com.epam.training.ticketservice.core.screening.model;
 import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Generated;
 import lombok.Getter;
 
 @Builder
 @EqualsAndHashCode
 @Getter
+@Generated
 public class ScreeningListDto {
 
     private final Movie movie;

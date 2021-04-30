@@ -4,8 +4,10 @@ import com.epam.training.ticketservice.core.user.persistence.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Generated;
 
 @Getter
+@Generated
 @EqualsAndHashCode
 @AllArgsConstructor
 public class UserDto {

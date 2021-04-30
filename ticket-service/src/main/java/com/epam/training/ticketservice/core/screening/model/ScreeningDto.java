@@ -4,10 +4,12 @@ import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
 import com.epam.training.ticketservice.core.room.persistence.entity.Room;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Generated;
 import lombok.Getter;
 
 import java.util.Date;
 
+@Generated
 @Builder
 @EqualsAndHashCode
 @Getter
